@@ -62,3 +62,37 @@ ggplot(data = imdb)
 
 ggplot(imdb) +
   geom_point(mapping = aes(x = orcamento, y = receita))
+
+## Observe que:
+
+## - a primeira camada é dada pela função ggplot() e recebe a nossa base imdb;
+## - a segunda camada é dada pela função geom_point(), especificando a forma 
+## geométrica utilizada no mapeamento das observações (pontos);
+## - as camadas são unidas com um +;
+## - o mapeamento na função geom_point() recebe a função aes(), responsável 
+## por descrever como as variáveis serão mapeadas nos aspectos visuais dos pontos 
+## (a forma geométrica escolhida);
+## - neste caso, os aspectos visuais mapeados são a posição do ponto no eixo x e 
+## a posição do ponto no eixo y;
+## - o Warning nos avisa sobre a exclusão das observações que possuem NA na variável 
+## receita e/ou orcamento;
+## - todas essas funções são do pacote {ggplot2}.
+
+## A combinação da função ggplot() e de uma ou mais funções geom_() definirá o tipo de gráfico gerado.
+
+## O primeiro argumento de qualquer função geom é o mapping. Esse argumento serve para mapear os 
+## dados nos atributos estéticos da forma geométrica escolhida.  Ele sempre receberá a função aes(), 
+## cujos argumentos vão sempre depender da forma geométrica que estamos utilizando.  No caso de 
+## um gráfico de dispersão, precisamos definir a posição dos pontos nos eixos x e y.  
+## No exemplo, a posição do ponto no eixo x foi dada pela coluna orcamento e a posição do ponto 
+## no eixo y pela coluna receita.
+
+## Podemos acrescentar uma terceira camada ao gráfico, desenhando a reta y = x para visualizarmos 
+## os filmes que não se pagaram.
+
+ggplot(imdb) +
+  geom_point(mapping = aes(x = orcamento, y = receita)) +
+  geom_abline(intercept = 0, slope = 1, color = "red")
+
+## Os pontos abaixo da reta representam os filmes com orçamento maior que a receita, isto é, aqueles 
+## que deram prejuízo.
