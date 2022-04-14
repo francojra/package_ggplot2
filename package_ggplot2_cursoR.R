@@ -49,7 +49,16 @@ library(ggplot2)
 
 ## Se rodarmos apenas a função ggplot(), obteremos um painel em branco.
 
-imdb <- read.csv2("LucroFilmes.csv")
+imdb <- readr::read_rds("imdb.rds")
 View(imdb)
 
 ggplot(data = imdb)
+
+## Apesar de termos passado os dados para a função, precisamos especificar como as observações 
+## serão mapeadas nos aspectos visuais do gráfico e quais formas geométricas serão utilizadas 
+## para isso.
+
+## O código abaixo constrói um gráfico de dispersão entre as variáveis orcamento e receita.
+
+ggplot(imdb) +
+  geom_point(mapping = aes(x = orcamento, y = receita))
