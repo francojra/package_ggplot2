@@ -96,3 +96,14 @@ ggplot(imdb) +
 
 ## Os pontos abaixo da reta representam os filmes com orçamento maior que a receita, isto é, aqueles 
 ## que deram prejuízo.
+
+## A reta x = y foi acrescentada ao gráfico pela função geom_abline(). Esse geom pode ser utilizado 
+## para desenhar qualquer reta do tipo y = a + b * x, sendo a o intercepto (intercept) da reta e b 
+## o seu coeficiente angular (slope).
+
+## Para ver como um ggplot realmente é construído por camadas, veja o que acontece quando colocamos 
+## a camada da reta antes da camada dos pontos:
+
+ggplot(imdb) +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_point(mapping = aes(x = orcamento, y = receita)) 
