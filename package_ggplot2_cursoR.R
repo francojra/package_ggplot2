@@ -39,3 +39,17 @@
 ## os exemplos.
 
 library(ggplot2)
+
+# Gráficos de pontos (dispersão) -----------------------------------------------------------------------------------------------------------
+
+## No ggplot2, os gráficos são construídos camada por camada, sendo a primeira delas 
+## dada pela função ggplot() (repare que não tem o “2”). Essa função recebe um data frame 
+## e cria a camada base do gráfico, o nosso canvas, onde acrescentaremos todos os outros 
+## elementos (camadas).
+
+## Se rodarmos apenas a função ggplot(), obteremos um painel em branco.
+
+imdb <- read.csv2("LucroFilmes.csv")
+View(imdb)
+
+ggplot(data = imdb)
