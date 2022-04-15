@@ -107,3 +107,22 @@ ggplot(imdb) +
 ggplot(imdb) +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_point(mapping = aes(x = orcamento, y = receita)) 
+
+## Além da posição nos eixos x e y, podemos mapear a cor dos pontos a uma variável.
+
+library(dplyr, warn.conflicts = FALSE)
+
+imdb %>%
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_point(aes(x = orcamento, y = receita, color = lucro))
+
+## O gráfico acima tem a cor dos pontos definida pelo valor da variável lucro. Como a coluna lucro 
+## é numérica, um degradê é criado para a cor dos pontos. O azul é a cor padrão nesses casos 
+## (veremos mais adiante como escolher a cor).
+
+## Veja que criamos a coluna lucro utilizando a função mutate() antes de iniciarmos a construção do 
+## gráfico.
+
+## O fluxo base %>% manipulação %>% ggplot é muito comum no dia-a-dia.
+
