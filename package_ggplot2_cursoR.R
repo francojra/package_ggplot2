@@ -126,3 +126,14 @@ imdb %>%
 
 ## O fluxo base %>% manipulação %>% ggplot é muito comum no dia-a-dia.
 
+## Poderíamos também classificar os filmes entre aqueles que lucraram ou não. Neste caso, 
+## como a coluna lucrou é textual, uma cor é atribuída a cada categoria.
+
+imdb %>%
+   mutate(
+    lucro = receita - orcamento,
+    lucro = ifelse(lucro <= 0, "Não", "Sim")
+  ) %>% 
+  filter(!is.na(lucro)) %>% 
+  ggplot() + 
+  geom_point(mapping = aes(x = orcamento, y = receita, color = lucro))
