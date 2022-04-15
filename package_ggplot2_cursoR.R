@@ -207,3 +207,37 @@ imdb %>%
   ggplot(aes(x = ano, y = nota_media)) +
   geom_line() +
   geom_label(aes(label = nota_media))
+
+# Gráficos de barras -----------------------------------------------------------------------------------------------------------------------
+
+## Para construir gráficos de barras, utilizamos o geom_col.
+
+## A seguir, construímos um gráfico de barras do número de filmes dos 10 diretores que mais aparecem 
+## na nossa base do IMDB.
+
+imdb %>% 
+  count(direcao) %>%
+  top_n(10, n) %>%
+  ggplot() +
+  geom_col(aes(x = direcao, y = n))
+
+## Gráficos de barras também precisam dos atributos x e y, sendo que o atributo y representará a 
+## altura de cada barra.
+
+## No gráfico anterior, vemos que o NA é considerado uma “categoria” de diretor e entra no gráfico. 
+## Podemos retirar os NAs dessa coluna previamente utilizando a função filter().
+
+## A seguir, além de retirar os NAs, atribuímos a coluna diretor à cor das colunas. Repare que, 
+## nesse caso, não utilizamos o atributo color e sim fill. A regra é a seguinte: o atributo color 
+## colore objetos sem área (pontos, linhas, contornos), o atributo fill preenche objetos com cor 
+## (barras, áreas, polígonos em geral).
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(10, n) %>%
+  ggplot() +
+  geom_col(
+    aes(x = direcao, y = n, fill = direcao),
+    show.legend = FALSE
+  )
