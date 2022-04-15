@@ -181,3 +181,29 @@ imdb %>%
   ggplot() +
   geom_line(aes(x = ano, y = nota_media)) +
   geom_point(aes(x = ano, y = nota_media))
+
+## Quando precisamos usar o mesmo aes() em vários geoms, podemos defini-lo dentro da função ggplot().
+## Esse aes() será então distribuído para todo geom do gráfico. O código anterior pode ser reescrito 
+## da seguinte forma:
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_point()
+
+## Se algum geom necessitar de um atributo que os outros não precisam, esse atributo pode ser 
+## especificado normalmente dentro dele. Abaixo, utilizamos o geom_label para colocar as notas 
+## médias no gráfico. Além do x e y, o geom_label também precisa do texto que será escrito no gráfico.
+
+## Dessa vez, vamos filtrar para os filmes de ação.
+
+imdb %>%
+  filter(generos == "Action") %>%
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  mutate(nota_media = round(nota_media, 1)) %>% 
+  ggplot(aes(x = ano, y = nota_media)) +
+  geom_line() +
+  geom_label(aes(label = nota_media))
