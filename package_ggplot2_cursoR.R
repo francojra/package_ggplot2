@@ -155,3 +155,29 @@ ggplot(imdb) +
 
 ggplot(imdb) +
   geom_point(aes(x = orcamento, y = receita), color = "blue")
+
+# Gráficos de linhas -----------------------------------------------------------------------------------------------------------------------
+
+## Utilizamos o geom_line para fazer gráficos de linhas. Assim como nos gráficos de pontos, 
+## precisamos definir as posições x e y. 
+
+## O gráfico abaixo representa a evolução da nota média dos filmes ao longo dos anos.
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media))
+
+## Gráficos de linha são muito utilizados para representar séries temporais, isto é, observações 
+## medidas repetidamente em intervalos equidistantes de tempo. O gráfico anterior apresenta 
+## a série da nota IMDB média ao longo dos anos.
+
+## Podemos colocar pontos e retas no mesmo gráfico. Basta acrescentar os dois geoms. 
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media)) +
+  geom_point(aes(x = ano, y = nota_media))
