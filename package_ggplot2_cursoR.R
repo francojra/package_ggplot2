@@ -137,3 +137,21 @@ imdb %>%
   filter(!is.na(lucro)) %>% 
   ggplot() + 
   geom_point(mapping = aes(x = orcamento, y = receita, color = lucro))
+
+## Um erro comum na hora de definir atributos estéticos de um gráfico é definir valores para 
+## atributos estéticos dentro da função aes(). Repare o que acontece quando tentamos definir
+## diretamente a cor dos pontos dentro dessa função.
+
+ggplot(imdb) +
+  geom_point(aes(x = orcamento, y = receita, color = "blue"))
+
+## Estranho, não? O que aconteceu foi o seguinte: a função aes() espera uma coluna 
+## para ser mapeada a cada atributo, então o valor blue é tratado como uma nova variável/coluna.
+## Assim, todos pontos têm a mesma cor (vermelha, padrão do ggplot) pois pertencem todos à essa
+## “categoria blue”.
+
+## No caso, o que gostaríamos é de ter pintado todos os pontos de azul. A forma certa de fazer 
+## isso é colocando o atributo color= fora da função aes():
+
+ggplot(imdb) +
+  geom_point(aes(x = orcamento, y = receita), color = "blue")
