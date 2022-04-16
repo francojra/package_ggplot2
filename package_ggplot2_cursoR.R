@@ -256,3 +256,29 @@ imdb %>%
     aes(y = direcao, x = n, fill = direcao),
     show.legend = FALSE
   )
+
+## Para ordenar as colunas, precisamos mudar a ordem dos níveis do fator diretor. Para isso, 
+## utilizamos a função fct_reorder() do pacote forcats. A nova ordem será estabelecida pela 
+## coluna n (quantidade de filmes).
+
+## Fatores dentro do R são números inteiros (1, 2, 3, …) que possuem uma representação textual 
+## (Ver Seção 7.6). Variáveis categóricas são transformadas em fatores pelo ggplot pois todo eixo 
+## cartesiano é numérico. Assim, os textos de uma variável categórica são, internamente, números 
+## inteiros.
+
+## Por padrão, os inteiros são atribuídos a cada categoria de uma variável pela ordem alfabética 
+## (repare na ordem dos diretores nos gráficos anteriores).  Assim, se transformássemos 
+## o vetor c("banana", "uva", "melancia") em um fator, a atribuição de inteiros seria:
+## “banana” vira 1, “melancia” vira 2 e “uva” vira 3. Embora sejam inteiros internamente, sempre 
+## que chamássemos esse novo vetor, ainda sim veríamos os textos “banana”, “uva” e “melancia”.
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(10, n) %>%
+  mutate(direcao = forcats::fct_reorder(direcao, n)) %>% 
+  ggplot() +
+  geom_col(
+    aes(y = direcao, x = n, fill = direcao),
+    show.legend = FALSE
+  ) 
