@@ -357,3 +357,42 @@ imdb %>%
     title = "Gráfico de dispersão",
     subtitle = "Receita vs Orçamento"
   )
+
+# Escalas ----------------------------------------------------------------------------------------------------------------------------------
+
+## O pacote {ggplot2} possui uma família de funções scale_ para modificarmos propriedades referentes 
+## às escalas do gráfico. Como podemos ter escalas de números, categorias, cores, datas, entre outras, 
+## temos uma função específica para cada tipo de escala.
+
+## Considere o gráfico a seguir.
+
+library(dplyr)
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media))
+
+## Vamos redefinir as quebras dos eixos x e y.
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media)) +
+  scale_x_continuous(breaks = seq(1916, 2016, 10)) +
+  scale_y_continuous(breaks = seq(0, 10, 2))
+
+## Como as escalas dos eixos x e y são numéricas, utilizamos nesse caso as funções 
+## scale_x_continuous() e scale_y_continuous(). Veja que, mesmo definindo as quebras 
+## entre 0 e 10, o limite do eixo y não é alterado. Para alterá-lo, usamos a função coord_cartesian().
+
+imdb %>% 
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media)) +
+  scale_x_continuous(breaks = seq(1916, 2016, 10)) +
+  scale_y_continuous(breaks = seq(0, 10, 2)) +
+  coord_cartesian(ylim = c(0, 10))
