@@ -282,3 +282,15 @@ imdb %>%
     aes(y = direcao, x = n, fill = direcao),
     show.legend = FALSE
   ) 
+
+## Por fim, podemos colocar uma label com o número de filmes de cada diretor dentro de cada barra.
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(10, n) %>%
+  mutate(direcao = forcats::fct_reorder(direcao, n)) %>% 
+  ggplot() +
+  geom_col(aes(x = direcao, y = n, fill = direcao), show.legend = FALSE) +
+  geom_label(aes(x = direcao, y = n/2, label = n)) +
+  coord_flip()
