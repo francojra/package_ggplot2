@@ -396,3 +396,37 @@ imdb %>%
   scale_x_continuous(breaks = seq(1916, 2016, 10)) +
   scale_y_continuous(breaks = seq(0, 10, 2)) +
   coord_cartesian(ylim = c(0, 10))
+
+## Para mudarmos as escalas de cores, usamos as funções do tipo: scale_color_ e scale_fill_.
+
+## Para escolher manualmente as cores de um gráfico, utilize as funções scale_color_manual() e 
+## scale_fill_manual(). A seguir substituímos as cores padrão do gráfico por um outro conjunto de 
+## cores.
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(5, n) %>%
+  ggplot() +
+  geom_col(
+    aes(x = direcao, y = n, fill = direcao),
+    show.legend = FALSE
+  ) +
+  coord_flip() +
+  scale_fill_manual(values = c("red", "blue", "green", "pink", "purple", "black"))
+
+## Também podemos usar códigos hexadecimais.
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(5, n) %>%
+  ggplot() +
+  geom_col(
+    aes(x = direcao, y = n, fill = direcao),
+    show.legend = FALSE
+  ) +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("#ff4500", "#268b07", "#ff7400", "#0befff", "#a4bdba", "#b1f91a")
+  )
