@@ -450,3 +450,62 @@ imdb %>%
   ggplot() +
   geom_line(aes(x = ano, y = num_filmes, color = generos)) +
   scale_color_discrete(labels = c("Comédia", "Drama"))
+
+# Temas ------------------------------------------------------------------------------------------------------------------------------------
+
+## Os gráficos que vimos até agora usam o tema padrão do ggplot2. 
+## Existem outros temas prontos para utilizarmos presentes na família de funções theme_.
+
+## theme_minimal()
+
+imdb %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita)) +
+  theme_minimal() 
+
+## theme_bw()
+
+imdb %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita)) +
+  theme_bw()
+
+## theme_classic()
+
+imdb %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita)) +
+  theme_classic()
+
+## theme_dark()
+
+imdb %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita)) +
+  theme_dark()
+
+## Você também pode criar o seu próprio tema utilizando a função theme(). 
+
+## Nesse caso, para trocar os elementos estéticos do gráfico precisamos 
+## usar as funções element_text() para textos, element_line() para linhas, 
+## element_rect() para áreas e element_blank() para remover elementos.
+
+## No exemplo a seguir, fizemos as seguintes modificações no tema padrão:
+
+## - Alinhamos o título no centro do gráfico.
+## - Alinhamos o subtítulo no centro do gráfico.
+## - Pintamos o título dos eixos de roxo.
+## - Preenchemos o fundo do gráfico de preto.
+## - Removemos o grid do gráfico.
+
+imdb %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita), color = "white") +
+  labs(title = "Gráfico de dispersão", subtitle = "Receita vs Orçamento") +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.title = element_text(color = "purple"),
+    panel.background = element_rect(fill = "black"),
+    panel.grid = element_blank()
+  )
