@@ -339,3 +339,21 @@ imdb %>%
   mutate(lucro = receita - orcamento) %>% 
   ggplot() +
   geom_boxplot(aes(x = direcao, y = lucro))
+
+# Títulos e labels -------------------------------------------------------------------------------------------------------------------------
+
+## Os títulos e labels do gráfico também são considerados camadas e são criados ou modificados pela 
+## função labs(). O exemplo a seguir coloca um título e um subtítulo no gráfico, além de modificar
+## os labels do eixo x e y e da legenda.
+
+imdb %>%
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_point(mapping = aes(x = orcamento, y = receita, color = lucro)) +
+  labs(
+    x = "Orçamento ($)",
+    y = "Receita ($)",
+    color = "Lucro ($)",
+    title = "Gráfico de dispersão",
+    subtitle = "Receita vs Orçamento"
+  )
