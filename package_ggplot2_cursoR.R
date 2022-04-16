@@ -241,3 +241,18 @@ imdb %>%
     aes(x = direcao, y = n, fill = direcao),
     show.legend = FALSE
   )
+
+## Para consertar os rótulos do eixo x, a malhor prática é invertermos os eixos do gráfico,
+## construindo barras horizontais.
+
+library(dplyr)
+
+imdb %>% 
+  count(direcao) %>%
+  filter(!is.na(direcao)) %>% 
+  top_n(10, n) %>%
+  ggplot() +
+  geom_col(
+    aes(y = direcao, x = n, fill = direcao),
+    show.legend = FALSE
+  )
