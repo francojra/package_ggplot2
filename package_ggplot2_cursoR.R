@@ -430,3 +430,23 @@ imdb %>%
   scale_fill_manual(
     values = c("#ff4500", "#268b07", "#ff7400", "#0befff", "#a4bdba", "#b1f91a")
   )
+
+## Para trocar as cores de um gradiente, utilize as funções scale_color_gradient() e 
+## scale_fill_gradient().
+
+imdb %>% 
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_point(aes(x = orcamento, y = receita, color = lucro)) +
+  scale_color_gradient(low = "red", high = "green")
+
+## Para trocar o nome das categorias de uma legenda de cores, utilize as funções 
+## scale_color_discrete() e scale_fill_discrete().
+
+imdb %>% 
+  filter(generos %in% c("Comedy", "Drama")) %>% 
+  group_by(ano, generos) %>% 
+  summarise(num_filmes = n()) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = num_filmes, color = generos)) +
+  scale_color_discrete(labels = c("Comédia", "Drama"))
