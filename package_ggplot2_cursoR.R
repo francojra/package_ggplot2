@@ -322,3 +322,20 @@ imdb %>%
     binwidth = 100000000,
     color = "white"
   )
+
+## Boxplots também são úteis para estudarmos a distribuição de uma variável, 
+## principalmente quando queremos comparar várias distribuições.
+
+## Para construir um boxplot no ggplot, utilizamos a função geom_boxplot. 
+## Ele precisa dos atributos x e y, sendo que ao atributo x devemos mapear uma variável 
+## categórica.
+
+## A seguir, construímos boxplots do lucro dos filmes dos diretores que fizeram mais de 26 filmes.
+
+imdb %>% 
+  filter(!is.na(direcao)) %>%
+  group_by(direcao) %>% 
+  filter(n() >= 26) %>% 
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_boxplot(aes(x = direcao, y = lucro))
