@@ -294,3 +294,31 @@ imdb %>%
   geom_col(aes(x = direcao, y = n, fill = direcao), show.legend = FALSE) +
   geom_label(aes(x = direcao, y = n/2, label = n)) +
   coord_flip()
+
+# Histogramas de boxplots ------------------------------------------------------------------------------------------------------------------
+
+## Para construir histogramas, usamos o geom_histogram.
+
+## Esse geom só precisa do atributo x (o eixo y é construído 
+## automaticamente). Histogramas são úteis para avaliarmos a distribuição de uma variável.
+
+## A seguir, construímos o histograma do lucro dos filmes do diretor Steven Spielberg. O primeiro
+## warning nos diz que o eixo x foi dividido em 30 intervalos para a construção do histograma.
+
+imdb %>% 
+  filter(direcao == "Steven Spielberg") %>%
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_histogram(aes(x = lucro))
+
+## Para definir o tamanho de cada intervalo, podemos utilizar o argumento bindwidth.
+
+imdb %>% 
+  filter(direcao == "Steven Spielberg") %>%
+  mutate(lucro = receita - orcamento) %>% 
+  ggplot() +
+  geom_histogram(
+    aes(x = lucro), 
+    binwidth = 100000000,
+    color = "white"
+  )
