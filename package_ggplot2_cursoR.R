@@ -509,3 +509,37 @@ imdb %>%
     panel.background = element_rect(fill = "black"),
     panel.grid = element_blank()
   )
+
+# Juntando gráficos ------------------------------------------------------------------------------------------------------------------------
+
+## Vários geoms no mesmo gráfico
+
+## Como vimos anteriormente, podemos acrescentar vários geoms em um mesmo gráfico, 
+## apenas adicionando novas camadas. No código a seguir, construímos o gráfico de dispersão 
+## da receita pelo orçamento dos filmes, acrescentando também uma reta de tendência linear 
+## aos pontos.
+
+ggplot(imdb, aes(x = orcamento, y = receita)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = "lm")
+
+## Replicando um gráfico para cada categoria de uma variável
+
+## Uma funcionalidade muito útil do ggplot2 é a possibilidade de usar 'facets' para replicar um 
+## gráfico para cada categoria de uma variável.
+
+imdb %>%
+  filter(generos %in% c("Drama", "Comedy")) %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = nota_imdb)) +
+  facet_wrap(~generos, nrow = 2)
+
+## Repare que usamos uma fórmula para dizer à função qual variável vamos utilizar para quebrar o 
+## gráfico. Podemos especificar se queremos os gráficos lado a lado ou um embaixo do outro pelos 
+## argumentos nrow= e ncol=.
+
+imdb %>%
+  filter(generos %in% c("Drama", "Comedy")) %>%
+  ggplot() +
+  geom_point(aes(x = orcamento, y = nota_imdb)) +
+  facet_wrap(~generos, ncol = 2)
