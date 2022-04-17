@@ -543,3 +543,33 @@ imdb %>%
   ggplot() +
   geom_point(aes(x = orcamento, y = nota_imdb)) +
   facet_wrap(~generos, ncol = 2)
+
+# Juntando gráficos diferentes -------------------------------------------------------------------------------------------------------------
+
+## Diversos outros pacotes trazem ferramentas super úteis para trabalharmos com o ggplot2. 
+## Um deles é o pacote {patchwork}. Após carregá-lo, podemos juntar dois gráficos em uma 
+## mesma figura com um simples +.
+
+library(patchwork)
+
+p1 <- imdb %>% 
+  filter(direcao == "Steven Spielberg") %>%
+  group_by(ano) %>% 
+  summarise(nota_media = mean(nota_imdb, na.rm = TRUE)) %>% 
+  ggplot() +
+  geom_line(aes(x = ano, y = nota_media))
+p1
+
+p2 <- imdb %>% 
+  mutate(lucro = receita - orcamento) %>% 
+  filter(direcao == "Steven Spielberg") %>% 
+  ggplot() +
+  geom_histogram(
+    aes(x = lucro),
+    fill = "lightblue", 
+    color = "darkblue", 
+    binwidth = 100000000
+  )
+p2
+
+p1 + p2
