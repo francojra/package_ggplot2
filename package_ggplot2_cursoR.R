@@ -295,7 +295,7 @@ imdb %>%
   geom_label(aes(x = direcao, y = n/2, label = n)) +
   coord_flip()
 
-# Histogramas de boxplots ------------------------------------------------------------------------------------------------------------------
+# Histogramas e boxplots ------------------------------------------------------------------------------------------------------------------
 
 ## Para construir histogramas, usamos o geom_histogram.
 
